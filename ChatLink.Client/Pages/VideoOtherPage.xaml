@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:ChatLink.Client.CustomControls"
+             x:Class="ChatLink.Client.Pages.VideoOtherPage"
+             Title="VideoOtherPage">
+
+    <Grid>
+        <customControls:MyWebView x:Name="CustomWebView" Navigated="WebView_Navigated" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatLink.Client.Pages.LoginPage"
+             Title="LoginPage"
+             xmlns:viewmodel="clr-namespace:ChatLink.Client.ViewModels"
+             x:DataType="viewmodel:LoginViewModel">
+
+    <VerticalStackLayout VerticalOptions="Center">
+        <Grid RowSpacing="10" ColumnSpacing="10" Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Server" Text="{Binding AuthUser.Server}" FontSize="16" IsEnabled="False" />
+            <Entry Grid.Row="1" Grid.Column="1" Placeholder="Email...@domain.com" FontSize="16" Text="{Binding AuthUser.Email}" />
+            <Entry Grid.Row="2" Grid.Column="1" Placeholder="Password" Text="{Binding AuthUser.Password}" IsPassword="True" FontSize="16" />
+            <Button Grid.Row="3" Grid.Column="1" Text="Sign in" FontSize="16" BackgroundColor="#0BBD8B" Command="{Binding LoginCommand}"/>
+            <Frame Grid.Row="4" Grid.Column="1" Padding="0" BorderColor="Transparent">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="{Binding .}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LoginViewModel}}, Path=GoToRegistrationPageCommand}"></TapGestureRecognizer>
+                </Frame.GestureRecognizers>
+                <Label  Text="Registration" FontSize="16" TextColor="#0BBD8B" Margin="0,10,0,10"/>
+            </Frame>
+
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentPage>

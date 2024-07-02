@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLink.Client", "ChatLink.Client\ChatLink.Client.csproj", "{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1311A0-9FBA-4DF9-A84A-E0A485820A92}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B74829C-3690-4151-9D36-22E98936F5B0}
+	EndGlobalSection
+EndGlobal

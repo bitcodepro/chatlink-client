@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatLink.Client.Pages.FullScreenImagePage"
+             Title="FullScreenImagePage"
+             BackgroundColor="Black">
+
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup Name="OrientationStates">
+                <VisualState Name="Portrait">
+                    <VisualState.Setters>
+                        <Setter TargetName="FullScreenImage" Property="Rotation" Value="0" />
+                        <Setter TargetName="FullScreenImage" Property="HorizontalOptions" Value="CenterAndExpand" />
+                        <Setter TargetName="FullScreenImage" Property="VerticalOptions" Value="CenterAndExpand" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState Name="Landscape">
+                    <VisualState.Setters>
+                        <Setter TargetName="FullScreenImage" Property="Rotation" Value="90" />
+                        <Setter TargetName="FullScreenImage" Property="HorizontalOptions" Value="CenterAndExpand" />
+                        <Setter TargetName="FullScreenImage" Property="VerticalOptions" Value="CenterAndExpand" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Image x:Name="FullScreenImage" Aspect="AspectFit">
+            <Image.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Up" Swiped="OnSwiped"/>
+                <SwipeGestureRecognizer Direction="Down" Swiped="OnSwiped"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <ImageButton VerticalOptions="Start" HorizontalOptions="End" Margin="10" Clicked="OnCloseButtonClicked" BackgroundColor="Transparent" Source="close_white.svg" HeightRequest="30" WidthRequest="30" />
+    </Grid>
+</ContentPage>

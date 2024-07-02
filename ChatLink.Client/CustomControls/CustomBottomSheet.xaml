@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bottomSheet:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatLink.Client.CustomControls.CustomBottomSheet"
+             xmlns:the49="clr-namespace:The49;assembly=The49.Maui.BottomSheet"
+             xmlns:bottomSheet="https://schemas.the49.com/dotnet/2023/maui"
+             Padding="16,32"
+             >
+    <StackLayout Padding="10,0,10,0">
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <ImageButton Source="image.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" Margin="0,0,5,0" />
+                <Label Text="Photo" VerticalOptions="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ImageButton_OnClicked" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <ImageButton Source="camera.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" Margin="0,0,5,0" />
+                <Label Text="Photo Camera" VerticalOptions="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CameraButton_OnClicked" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="0,0,0,20">
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <ImageButton Source="image.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" Margin="0,0,5,0" />
+                <Label Text="Video" VerticalOptions="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VideoButton_OnClicked" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <ImageButton Source="camera.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" Margin="0,0,5,0" />
+                <Label Text="Video Camera" VerticalOptions="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VideoCameraButton_OnClicked" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </HorizontalStackLayout>
+    </StackLayout>
+
+</bottomSheet:BottomSheet>

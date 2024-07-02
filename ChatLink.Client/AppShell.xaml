@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ChatLink.Client.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ChatLink.Client.Pages"
+    Shell.FlyoutBehavior="Disabled"
+    Title="ChatLink.Client"
+    Shell.NavBarIsVisible="False"
+    >
+
+    <TabBar x:Name="MainTab">
+        <Tab Icon="address_book.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ContactsPage}" Route="ContactsPage"></ShellContent>
+        </Tab>
+        <Tab Icon="bubble_chat.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ChatsPage}" Route="ChatsPage"></ShellContent>
+        </Tab>
+        <Tab Icon="settings.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" Route="SettingsPage"></ShellContent>
+        </Tab>        
+        <Tab Icon="exit.svg">
+            <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" Route="SettingsPage"></ShellContent>
+        </Tab>
+        <!-- <Tab Icon="settings.png"> -->
+        <!--     <ShellContent ContentTemplate="{DataTemplate local:RegistrationPage}" Route="SettingsPage"></ShellContent> -->
+        <!-- </Tab> -->
+    </TabBar>
+
+</Shell>

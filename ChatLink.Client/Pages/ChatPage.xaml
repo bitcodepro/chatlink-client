@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatLink.Client.Pages.ChatPage"
+             xmlns:viewmodel="clr-namespace:ChatLink.Client.ViewModels"
+             xmlns:converters="using:ChatLink.Client.Converters"
+             xmlns:dtos="clr-namespace:ChatLink.Client.Models.Dtos"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:ChatViewModel"
+             Title="ChatPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeConverter x:Key="DateTimeConverter" />
+            <converters:RandomColorConverter x:Key="RandomColorConverter" />
+            <converters:InitialConverter x:Key="InitialConverter" />
+            <converters:IsNullConverter x:Key="IsNullConverter" />
+            <converters:NotNullConverter x:Key="NotNullConverter" />
+            <converters:BooleanToAlignmentConverter x:Key="BooleanToAlignmentConverter" />
+            <converters:BooleanToMarginConverter x:Key="BooleanToMarginConverter" />
+            <converters:BooleanToColumnConverter x:Key="BooleanToColumnConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Top Bar -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="0,4,4,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ImageButton Grid.Column="0" Source="arrow_left.svg" WidthRequest="40" HeightRequest="40" Clicked="GoBack" />
+
+            <Frame Grid.Column="1" WidthRequest="25" HeightRequest="25" CornerRadius="25" IsClippedToBounds="True" Padding="0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
+                <Image x:Name="UserNameImage" Source="man.png" WidthRequest="40" HeightRequest="40" />
+            </Frame>
+
+            <Frame Grid.Column="2" HeightRequest="25" Padding="8,1,0,8" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
+                <Label  Text="{Binding SessionContext.UserName}" VerticalOptions="Center" FontSize="13" TextColor="Black" />
+            </Frame>
+
+            <ImageButton Source="phone_call.svg" Grid.Column="4" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="30" WidthRequest="30" Margin="0,0,20,0" Command="{Binding CallAudioCommand}" />
+        </Grid>
+
+
+
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" x:Name="MessagesView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="dtos:MessageDto">
+                    <Frame Padding="4,0,4,0" BorderColor="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="80*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Frame Grid.Column="{Binding IsCurrentUser, Converter={StaticResource BooleanToColumnConverter}}"
+                           Grid.ColumnSpan="2"
+                           HorizontalOptions="{Binding IsCurrentUser, Converter={StaticResource BooleanToAlignmentConverter}}"
+                           Margin="{Binding IsCurrentUser, Converter={StaticResource BooleanToMarginConverter}}" Padding="8" BorderColor="White">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsCurrentUser}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#e8f7f2" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsCurrentUser}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#e8ebf4" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Frame Grid.RowSpan="2" Grid.Column="0" WidthRequest="30" HeightRequest="30" Margin="0,0,10,0" CornerRadius="25" IsClippedToBounds="True" Padding="0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Start">
+                                        <Grid>
+                                            <Image Source="{Binding ImageUrl}" Aspect="AspectFill" IsVisible="{Binding ImageUrl, Converter={StaticResource NotNullConverter}}" />
+                                            <Frame BackgroundColor="{Binding ImageUrl, Converter={StaticResource RandomColorConverter}}" IsVisible="{Binding ImageUrl, Converter={StaticResource IsNullConverter}}" CornerRadius="25" IsClippedToBounds="True">
+                                                <Label Text="{Binding UserName, Converter={StaticResource InitialConverter}}" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Frame>
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding DecryptedMessage}" TextColor="Black" FontSize="16" Margin="0,0,10,0">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Text">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Image">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Audio">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="Video">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    
+                                    <!-- Content for Image Messages -->
+                                    <Image Grid.Row="1" Grid.Column="1" Margin="0,0,10,0" Aspect="AspectFill" WidthRequest="200">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OpenImageOnFullscreenCommand, Source={x:Reference MessagesView}}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Image">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Text">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Audio">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Video">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                        <Image.Source>
+                                            <FileImageSource File="{Binding DecryptedMessage}" />
+                                        </Image.Source>
+                                    </Image>
+
+                                    <toolkit:MediaElement Grid.Row="1" Grid.Column="1" HeightRequest="300" Source="{Binding DecryptedMessage}">
+                                        <toolkit:MediaElement.Triggers>
+                                            <DataTrigger TargetType="toolkit:MediaElement" Binding="{Binding Type}" Value="Audio">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="toolkit:MediaElement" Binding="{Binding Type}" Value="Video">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="toolkit:MediaElement" Binding="{Binding Type}" Value="Image">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="toolkit:MediaElement" Binding="{Binding Type}" Value="Text">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </toolkit:MediaElement.Triggers>
+                                    </toolkit:MediaElement>
+
+
+                                    <Grid Grid.Row="1" Grid.Column="1" WidthRequest="250">
+                                        <Grid.Triggers>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Audio">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Video">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Image">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Text">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Grid.Triggers>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ProgressBar VerticalOptions="Center" HorizontalOptions="FillAndExpand" ScaleY="5" Grid.Column="0" Margin="0,0,5,0" ProgressColor="CadetBlue" Progress="{Binding Progress}" />
+                                        <ImageButton Source="play.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="35" WidthRequest="35" Grid.Column="1"  Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference MessagesView}}" CommandParameter="{Binding .}" IsVisible="{Binding IsPlay}" />
+                                        <ImageButton Source="playing.svg" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="35" WidthRequest="35" Grid.Column="1"  Command="{Binding BindingContext.StopAudioCommand, Source={x:Reference MessagesView}}" CommandParameter="{Binding .}" IsVisible="{Binding IsPlaying}" />
+                                    </Grid>
+
+                                    <Label Grid.Row="2" Grid.Column="2" Text="{Binding MessageCreatedDt, Converter={StaticResource DateTimeConverter}}" TextColor="#747d8c" FontSize="13" HorizontalTextAlignment="End" VerticalTextAlignment="End" />
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="2" BackgroundColor="White" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ImageButton Source="add.svg" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="30" WidthRequest="30" Clicked="OpenBottomMenu_OnClicked" />
+
+            <Frame Grid.Column="1" CornerRadius="20" BackgroundColor="White" HasShadow="False" Padding="6,2,4,0" Background="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray100}}">
+                <Editor x:Name="ExpandingEditor" Margin="2,0,2,0" Text="{Binding Message}" TextChanged="OnEditorTextChanged" AutoSize="TextChanges" Placeholder="Message..." VerticalOptions="Start"  PlaceholderColor="#747d8c" FontSize="16"/>
+            </Frame>
+
+            <ImageButton Source="send.svg" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="30" WidthRequest="30" IsVisible="{Binding IsSendVisible}" Clicked="ImageButton_OnClicked" />
+            <ImageButton Source="microphone.svg" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" IsVisible="{Binding IsMicrophoneVisible}" Clicked="MicrophoneButton_OnClicked"/>
+            <ImageButton Source="recording.svg" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="25" WidthRequest="25" IsVisible="{Binding IsRecordingVisible}" Clicked="MicrophoneButton_OnClicked"/>
+        </Grid>
+        
+    </Grid>
+
+</ContentPage>
