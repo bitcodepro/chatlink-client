@@ -9,5 +9,7 @@ It uses e2e encryption with AES-256 GCM
  - record voice messages
  - send photos and videos as attachments
  - take photos and videos and send them
- - make calls via WebRTC"
+ - make calls via WebRTC
+
+ You can see the application images here - https://github.com/bitcodepro/chatlink-client/tree/main/Images  
 
